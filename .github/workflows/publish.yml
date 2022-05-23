@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Clear local NuGet cache (workaround for failed restores on windows-latest)
-      run: dotnet clean $env:SOLUTION && dotnet nuget locals all --clear
+      run: dotnet clean SynthEBD.sln && dotnet nuget locals all --clear
 
     - name: Restore dependencies
       run: dotnet restore SynthEBD.sln
