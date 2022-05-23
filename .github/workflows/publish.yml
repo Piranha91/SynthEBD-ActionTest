@@ -23,13 +23,13 @@ jobs:
     - name: Test
       run: dotnet test SynthEBD.sln -c Release --no-build
       
-    - name: Pack GUI
+    - name: Publish
       #run: dotnet publish "SynthEBD/SynthEBD.csproj" --configuration Release -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true
       run: dotnet publish "SynthEBD/SynthEBD.csproj" --configuration Release -p:PublishSingleFile=false
       
     - name: Archive Release
       run: |
-        powershell Compress-Archive SynthEBD/bin/Release/net6.0/win-x64/publish/* SynthEBD.zip
+        powershell Compress-Archive SynthEBD/bin/Release/net6.0-windows/publish/* SynthEBD.zip
     - name: Publish SynthEBD to Github
       uses: svenstaro/upload-release-action@v2
       with:
