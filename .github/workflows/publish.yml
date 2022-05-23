@@ -1,31 +1,25 @@
-name: Publish
+name: Dev
 
 on:
-  release:
-    types: [published]
-      
-    env:
-      SOLUTION: SynthEBD.sln
-    
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
 jobs:
-  release:
+  build:
+
     runs-on: windows-latest
+
     steps:
-    - name: Clear local NuGet cache (workaround for failed restores on windows-latest)
-      run: dotnet clean SynthEBD.sln && dotnet nuget locals all --clear
-
-    - name: Restore dependencies
-      run: dotnet restore SynthEBD.sln
-
-    - name: Build
-      run: dotnet build SynthEBD.sln --no-restore
-
-    - name: Archive Release
-      run: |
-        powershell Compress-Archive SynthEBD/bin/Release/net6.0/win-x64/publish/* SynthEBD.zip
-    - name: Publish SynthEBD to Github
-      uses: svenstaro/upload-release-action@v2
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
       with:
-        file: SynthEBD.zip
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.event.release.tag_name }}
+        dotnet-version: 6.0.*
+    - name: Install dependencies
+      run: dotnet restore SynthEBD.sln
+    - name: Build
+      run: dotnet build SynthEBD.sln -c Release --no-restore
+    - name: Test
+      run: dotnet test SynthEBD.sln -c Release --no-build
