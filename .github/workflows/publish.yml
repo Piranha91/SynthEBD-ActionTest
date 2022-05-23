@@ -33,6 +33,6 @@ jobs:
     - name: Publish SynthEBD to Github
       uses: svenstaro/upload-release-action@v2
       with:
-        file: SynthEBD.zip
+        file: SynthEBD ${{ github.event.release.tag_name }}.zip
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.event.release.tag_name }}
