@@ -5,7 +5,7 @@ on:
     types: [published]
       
     env:
-      SOLUTION: src/SynthEBD.sln
+      SOLUTION: SynthEBD.sln
     
 jobs:
   release:
@@ -15,14 +15,14 @@ jobs:
       run: dotnet clean $env:SOLUTION && dotnet nuget locals all --clear
 
     - name: Restore dependencies
-      run: dotnet restore $env:SOLUTION
+      run: dotnet restore SynthEBD.sln
 
     - name: Build
-      run: dotnet build $env:SOLUTION --no-restore
+      run: dotnet build SynthEBD.sln --no-restore
 
     - name: Archive Release
       run: |
-        powershell Compress-Archive $env:SOLUTION/bin/Release/net6.0/win-x64/publish/* SynthEBD.zip
+        powershell Compress-Archive SynthEBD/bin/Release/net6.0/win-x64/publish/* SynthEBD.zip
     - name: Publish SynthEBD to Github
       uses: svenstaro/upload-release-action@v2
       with:
