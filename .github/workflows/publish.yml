@@ -1,0 +1,21 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+      
+    env:
+      SOLUTION: SynthEBD.sln
+    
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+    - name: Clear local NuGet cache (workaround for failed restores on windows-latest)
+      run: dotnet clean $env:SOLUTION && dotnet nuget locals all --clear
+
+    - name: Restore dependencies
+      run: dotnet restore $env:SOLUTION
+
+    - name: Build
+      run: dotnet build $env:SOLUTION --no-restore
