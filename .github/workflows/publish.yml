@@ -5,7 +5,7 @@ on:
     types: [published]
       
     env:
-      SOLUTION: SynthEBD.sln
+      SOLUTION: src/SynthEBD.sln
     
 jobs:
   release:
