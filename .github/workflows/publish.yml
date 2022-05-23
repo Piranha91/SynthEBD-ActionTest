@@ -29,10 +29,10 @@ jobs:
       
     - name: Archive Release
       run: |
-        powershell Compress-Archive SynthEBD/bin/Release/net6.0-windows/publish/* "SynthEBD ${{ github.event.release.tag_name }}.zip"
+        powershell Compress-Archive SynthEBD/bin/Release/net6.0-windows/publish/* "SynthEBD_${{ github.event.release.tag_name }}.zip"
     - name: Publish SynthEBD to Github
       uses: svenstaro/upload-release-action@v2
       with:
-        file: "SynthEBD ${{ github.event.release.tag_name }}.zip"
+        file: "SynthEBD_${{ github.event.release.tag_name }}.zip"
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.event.release.tag_name }}
