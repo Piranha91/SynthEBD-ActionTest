@@ -20,3 +20,12 @@ jobs:
       run: dotnet build SynthEBD.sln -c Release --no-restore
     - name: Test
       run: dotnet test SynthEBD.sln -c Release --no-build
+    - name: Archive Release
+      run: |
+        powershell Compress-Archive SynthEBD/bin/Release/net6.0/win-x64/publish/* SynthEBD.zip
+    - name: Publish SynthEBD to Github
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: SynthEBD.zip
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.event.release.tag_name }}
