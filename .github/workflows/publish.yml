@@ -24,7 +24,8 @@ jobs:
       run: dotnet test SynthEBD.sln -c Release --no-build
       
     - name: Pack GUI
-      run: dotnet publish "SynthEBD/SynthEBD.csproj" --configuration Release -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true
+      #run: dotnet publish "SynthEBD/SynthEBD.csproj" --configuration Release -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true
+      run: dotnet publish "SynthEBD/SynthEBD.csproj" --configuration Release -p:PublishSingleFile=false
       
     - name: Archive Release
       run: |
